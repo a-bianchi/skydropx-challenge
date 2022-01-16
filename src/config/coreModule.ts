@@ -24,7 +24,7 @@ export class CoreModule {
   ) {
     this.models = Models;
     this.db = openConnection(db_name, db_user, db_pass, db_host, db_port, poolOpts);
-    this.db.addModels([`${dirName}models/**.model.*`]);
+    this.db.addModels([__dirname + '/models/**/*.model.ts']);
     this.checkAuthenticate(db_host);
   }
 

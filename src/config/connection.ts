@@ -19,7 +19,7 @@ export const openConnection = (
     pool: poolOpts,
     dialect: 'postgres',
     dialectOptions: {
-      ssl: { required: true, rejectUnauthorized: process.env.NODE_ENV === 'production' ? true : false },
+      //ssl: { required: true, rejectUnauthorized: process.env.NODE_ENV === 'production' ? true : false },
       options: {
         validateBulkLoadParameters: true,
       },
@@ -27,7 +27,7 @@ export const openConnection = (
     define: {
       schema: 'core',
     },
-    models: [`${dirName}models/**.model.ts`],
+    models: [__dirname + '/models/**/*.model.ts'],
     modelMatch: (filename: string, member: string): boolean => {
       return filename.substring(0, filename.indexOf('.model')) === member;
     },
