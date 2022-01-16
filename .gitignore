@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+
+# Compiled code
+build
+
+# Cloud
+.serverless
+# serverless parameters
+.test.parameters.json
+
+# Others
+*.DS_STORE
+
+.env
+
+coverage
+
+/.vscode
+
+./yarn-error.log
