@@ -1,10 +1,10 @@
 import winston from 'winston';
-import config from '../config/config';
+import { Config } from '../config/config';
 
 const transports = [];
 
-transports.push(new winston.transports.File({ filename: config.logger.errorFile, level: 'error' }));
-transports.push(new winston.transports.File({ filename: config.logger.combinedFile }));
+transports.push(new winston.transports.File({ filename: Config.logger.errorFile, level: 'error' }));
+transports.push(new winston.transports.File({ filename: Config.logger.combinedFile }));
 
 const winstonLogger = winston.createLogger({
   level: 'info',

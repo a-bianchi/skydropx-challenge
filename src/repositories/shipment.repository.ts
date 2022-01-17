@@ -1,4 +1,4 @@
-import { Shipment } from '../models/shipment.model';
+import Shipment from '../models/shipment.model';
 import { CreateShipment } from '../types';
 import { Transaction } from 'sequelize';
 

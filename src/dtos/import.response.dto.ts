@@ -1,4 +1,5 @@
 import { IsObject, IsString } from 'class-validator';
+import { errorDetails } from '../types';
 
 export class ImportResponse {
   @IsString()
@@ -8,8 +9,5 @@ export class ImportResponse {
   status: string;
 
   @IsObject()
-  errors: {
-    line: number;
-    messages: string;
-  };
+  errors: errorDetails[] = [];
 }

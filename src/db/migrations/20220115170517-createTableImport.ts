@@ -16,16 +16,11 @@ export default {
         type: DataTypes.ENUM,
         values: ['PENDING', 'PROCESSING', 'COMPLETED', 'ERROR'],
       },
-      // orderId: {
-      //   allowNull: true,
-      //   type: DataTypes.BIGINT,
-      //   field: 'order_id',
-      //   references: {
-      //     model: 'order',
-      //     key: 'id',
-      //   },
-      // },
       created_at: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updated_at: {
         allowNull: false,
         type: DataTypes.DATE,
       },

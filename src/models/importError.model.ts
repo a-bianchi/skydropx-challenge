@@ -1,10 +1,13 @@
-import { Table, Column, DataType, Model, BelongsTo } from 'sequelize-typescript';
-import { literal } from 'sequelize';
-import { Import } from './import.model';
+import { Table, Column, DataType, Model, BelongsTo, ForeignKey } from 'sequelize-typescript';
+import Import from './import.model';
 
 @Table({ tableName: 'import_error', underscored: true })
-export class ImportError extends Model<ImportError> {
-  @Column({ type: DataType.UUID, primaryKey: true, defaultValue: literal('uuid_generate_v1()') })
+export default class ImportError extends Model<ImportError> {
+  @Column({ type: DataType.BIGINT, primaryKey: true, autoIncrement: true })
+  id: number;
+
+  @ForeignKey(() => Import)
+  @Column({ type: DataType.UUID })
   importId: string;
 
   @Column({ type: DataType.INTEGER })

@@ -1,4 +1,4 @@
-import { Order } from '../models/order.model';
+import Order from '../models/order.model';
 import { CreateOrder } from '../types';
 import { Transaction } from 'sequelize';
 

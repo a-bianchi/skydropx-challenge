@@ -1,10 +1,10 @@
 import { Table, Column, DataType, HasMany, BelongsTo, ForeignKey, HasOne, Model } from 'sequelize-typescript';
-import { Address } from './address.model';
-import { Order } from './order.model';
-import { Parcel } from './parcel.model';
+import Address from './address.model';
+import Order from './order.model';
+import Parcel from './parcel.model';
 
 @Table({ tableName: 'shipment', underscored: true })
-export class Shipment extends Model<Shipment> {
+export default class Shipment extends Model<Shipment> {
   @Column({ type: DataType.BIGINT, primaryKey: true, autoIncrement: true })
   id: number;
 

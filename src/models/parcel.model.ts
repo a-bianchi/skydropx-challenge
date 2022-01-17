@@ -1,9 +1,8 @@
 import { Table, Column, DataType, BelongsTo, ForeignKey, Model } from 'sequelize-typescript';
-
-import { Shipment } from './shipment.model';
+import Shipment from './shipment.model';
 
 @Table({ tableName: 'parcel', underscored: true })
-export class Parcel extends Model<Parcel> {
+export default class Parcel extends Model<Parcel> {
   @Column({ type: DataType.BIGINT, primaryKey: true, autoIncrement: true })
   id: number;
 

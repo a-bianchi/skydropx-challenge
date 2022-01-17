@@ -1,10 +1,9 @@
 import { Table, Column, DataType, BelongsTo, ForeignKey, Model } from 'sequelize-typescript';
 import { literal } from 'sequelize';
-
-import { Shipment } from './shipment.model';
+import Shipment from './shipment.model';
 
 @Table({ tableName: 'order', underscored: true })
-export class Order extends Model<Order> {
+export default class Order extends Model<Order> {
   @Column({ type: DataType.UUID, primaryKey: true, defaultValue: literal('uuid_generate_v1()') })
   id: string;
 

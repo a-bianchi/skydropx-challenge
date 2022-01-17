@@ -1,3 +1,10 @@
+export enum Status {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  COMPLETED = 'COMPLETED',
+  ERROR = 'ERROR',
+}
+
 export type CreateImportError = {
   importId: string;
   line: number;
@@ -23,7 +30,7 @@ export type CreateShipment = {
 
 export type CreateParcel = {
   id?: number;
-  shipmentId: number;
+  shipmentId?: number;
   length: number;
   width: number;
   height: number;
@@ -34,6 +41,24 @@ export type CreateParcel = {
 
 export type CreateOrder = {
   id?: number;
-  shipmentId: number;
+  shipmentId?: number;
   reference: string;
+};
+
+export type ConvertOrder = {
+  addressTo: CreateAddress;
+  addressFrom: CreateAddress;
+  parcel: CreateParcel;
+  order: CreateOrder;
+};
+
+export type messageDetails = {
+  path: string;
+  messages: string;
+  value: string | number;
+};
+
+export type errorDetails = {
+  line: number;
+  error: messageDetails;
 };

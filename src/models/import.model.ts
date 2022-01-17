@@ -1,20 +1,18 @@
 import { Table, Column, DataType, Model, HasMany } from 'sequelize-typescript';
 import { literal } from 'sequelize';
-import { ImportError } from './importError.model';
-
-const enum Status {
-  PENDING = 'PENDING',
-  PROCESSING = 'PROCESSING',
-  COMPLETED = 'COMPLETED',
-  ERROR = 'ERROR',
-}
+import ImportError from './importError.model';
+import { Status } from '../types';
 
 @Table({ tableName: 'import', underscored: true })
-export class Import extends Model<Import> {
+export default class Import extends Model<Import> {
   @Column({ type: DataType.UUID, primaryKey: true, defaultValue: literal('uuid_generate_v1()') })
   id: string;
 
-  @Column({ type: DataType.ENUM, defaultValue: Status.PENDING })
+  @Column({
+    type: DataType.ENUM,
+    values: [Status.COMPLETED, Status.ERROR, Status.PENDING, Status.PROCESSING],
+    defaultValue: Status.PENDING,
+  })
   status: Status;
 
   /**

@@ -1,8 +1,8 @@
 import { Table, Column, DataType, HasMany, Model } from 'sequelize-typescript';
-import { Shipment } from './shipment.model';
+import Shipment from './shipment.model';
 
 @Table({ tableName: 'address', underscored: true })
-export class Address extends Model<Address> {
+export default class Address extends Model<Address> {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
   id: number;
 

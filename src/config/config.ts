@@ -10,21 +10,20 @@ const parseParamInt = (envValue: string, defaultValue: string | number): string 
 };
 // #endregion
 
-export = {
+export const Config = {
   db: {
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || '5433',
+    port: Number(process.env.DB_PORT) || 5433,
     username: process.env.DB_USER || 'root',
     password: process.env.DB_PASS || 'root',
-    database: process.env.DB_NAME || 'lutikey',
-    sequelize: {
-      host: process.env.DB_HOST || 'localhost',
-      dialect: 'mysql',
-      logging: false,
-      define: {
-        underscored: 'true',
-        timestamps: 'false',
-      },
+    database: process.env.DB_NAME || 'skydropx',
+    dialect: 'postgres',
+    logging: false,
+    seederStorage: 'sequelize',
+    define: {
+      underscored: 'true',
+      timestamps: 'false',
+      freezeTableName: true,
     },
   },
   api: {

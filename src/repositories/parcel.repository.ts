@@ -1,4 +1,4 @@
-import { Parcel } from '../models/parcel.model';
+import Parcel from '../models/parcel.model';
 import { CreateParcel } from '../types';
 import { Transaction } from 'sequelize';
 

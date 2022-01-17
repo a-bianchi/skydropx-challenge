@@ -1,48 +1,61 @@
-import { NextFunction, Request, Response } from 'express';
-import { Body, Get, JsonController, Param, Post } from 'routing-controllers';
+import { Get, JsonController, Param, Post, UploadedFile, UseBefore } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
-import { CreateImportBody } from '../dtos/import.create.body.dto';
 import { ImportResponse } from '../dtos/import.response.dto';
 import { ImportService } from '../services/import.service';
-
-const importService = new ImportService();
-// @UseBefore(
-//   (_req: Request, _res: Response, next: NextFunction) => {
-//     console.log('Before');
-//     next();
-//   },
-//   (_req: Request, _res: Response, next: NextFunction) => {
-//     console.log('Before');
-//     next();
-//   },
-// )
-
+import multer from 'multer';
+const upload = multer();
 @OpenAPI({
   security: [{ jwt: [] }],
 })
 @JsonController('/import')
 export class ImportController {
+  private importService = new ImportService();
+
   @Get('/:id')
   @OpenAPI({
     summary: 'Return a single import',
   })
   @ResponseSchema(ImportResponse)
-  getOne(@Param('id') id: string) {
-    console.log('id', id);
+  async getOne(@Param('id') id: string) {
+    const importResponse = await this.importService.getOneImport(id);
+    let errors;
+    if (importResponse.errors.length > 0)
+      errors = importResponse.errors.map((error) => {
+        return {
+          lineNumber: error.line,
+          error: JSON.parse(error.error),
+        };
+      });
     return {
-      importId: 1,
-      status: 'OK',
-      errors: {
-        line: 0,
-        messages: '',
-      },
+      importId: id,
+      status: importResponse.status,
+      errors,
     };
   }
 
   @Post('/')
-  @OpenAPI({ summary: 'Create a new import' })
-  async createImportFile(@Body({ validate: false }) body: CreateImportBody) {
-    const { id, status } = await importService.createImport(body);
-    return { id, status };
+  @OpenAPI({
+    summary: 'Create a new import',
+    requestBody: {
+      content: {
+        'multipart/form-data': {
+          schema: {
+            properties: {
+              file: {
+                format: 'binary',
+                type: 'string',
+              },
+            },
+            required: ['file'],
+            type: 'object',
+          },
+        },
+      },
+    },
+  })
+  @UseBefore(upload.single('file'))
+  async createImportFile(@UploadedFile('file') file: Express.Multer.File) {
+    const importId = await this.importService.createImport(file.buffer, file.mimetype);
+    return { importId };
   }
 }

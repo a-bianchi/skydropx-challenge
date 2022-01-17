@@ -3,11 +3,14 @@ import { QueryInterface, DataTypes } from 'sequelize';
 export default {
   up: async (queryInterface: QueryInterface): Promise<void> => {
     await queryInterface.createTable('import_error', {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       importId: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
         field: 'import_id',
-        primaryKey: true,
         references: {
           model: 'import',
           key: 'id',

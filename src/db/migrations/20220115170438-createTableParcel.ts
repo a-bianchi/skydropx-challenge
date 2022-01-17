@@ -33,7 +33,7 @@ export default {
         field: 'dimensions_unit',
       },
       parcelWeight: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.REAL,
         field: 'weight',
       },
       parcelWeightUnit: {
