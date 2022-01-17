@@ -19,3 +19,7 @@ coverage
 /.vscode
 
 ./yarn-error.log
+
+var
+
+*.log
