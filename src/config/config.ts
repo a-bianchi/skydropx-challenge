@@ -27,7 +27,7 @@ export const Config = {
     },
   },
   api: {
-    port: parseParamInt(process.env.API_PORT, 3001),
+    port: parseParamInt(process.env.PORT, 3001),
     secret: process.env.API_SECRET || 'secret',
     environment: process.env.ENVIRONMENT || 'PROD',
     nodeEnv: process.env.NODE_ENV || 'production',

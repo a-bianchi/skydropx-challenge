@@ -4,16 +4,19 @@
   "description": "SkydropX Developer Challenges",
   "main": "index.local.js",
   "license": "MIT",
+  "engines": {
+    "node": "16.13.2"
+  },
   "scripts": {
     "check:pre-commit": "npm run lint:fix",
     "check:pre-push": "npm run build && npm run test",
-    "start": "npm run build && node ./build/index.local.js",
+    "start": "node build/index.local.js",
     "dev": "nodemon --config nodemon.json src/index.local.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.local.ts",
     "build": "node_modules/.bin/tsc",
     "build:clean": "rm -rf dist/ && npm run build",
     "build:watch": "npm run build -- -w",
-    "test": "jest --config=jest.config.js",
+    "test": "jest --detectOpenHandles --config=jest.config.js",
     "prepare": "husky install",
     "seed:all": "npm run build && sequelize-cli db:seed:all",
     "seed:undo": "npm run build && sequelize-cli db:seed:undo",

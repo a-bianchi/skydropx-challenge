@@ -118,15 +118,15 @@ export class ImportService {
     return this.importRepository.findOneImport(id);
   }
 
-  public async markImportProcessed(id: string): Promise<void> {
-    this.importRepository.updateImport(id, { status: Status.PROCESSING });
+  public async markImportProcessed(id: string): Promise<Import[]> {
+    return this.importRepository.updateImport(id, { status: Status.PROCESSING });
   }
 
-  public async markImportFailed(id: string): Promise<void> {
-    this.importRepository.updateImport(id, { status: Status.ERROR });
+  public async markImportFailed(id: string): Promise<Import[]> {
+    return this.importRepository.updateImport(id, { status: Status.ERROR });
   }
 
-  public async markImportSuccess(id: string): Promise<void> {
-    this.importRepository.updateImport(id, { status: Status.COMPLETED });
+  public async markImportSuccess(id: string): Promise<Import[]> {
+    return this.importRepository.updateImport(id, { status: Status.COMPLETED });
   }
 }

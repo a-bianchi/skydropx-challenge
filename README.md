@@ -1,6 +1,82 @@
+# SkydropX Developer Challenge - Shipping API
+Objetivo: construir una API con Rails que sea capaz de importar y validar los datos de los envíos desde un archivo CSV de manera asíncrona.
+
+
+Documentation: https://skydropx-challenge.herokuapp.com/docs/
+## Start
+
+Clone the repo:
+```sh
+git clone https://github.com/a-bianchi/shipping-api.git
+cd shipping-api
+```
+
+Install dependencies:
+```sh
+npm install
+or
+yarn install
+```
+
+Set environment (vars):
+```sh
+cp .env.example .env
+```
+
+Start server:
+```sh
+# Start server
+npm run dev
+or
+yarn run dev
+```
+
+Tests:
+```sh
+# Run tests written in ES6 
+npm run test
+or
+yarn run test
+```
+
+Build server code:
+```sh
+# Wipe out build directory
+npm run build
+or
+yarn run build
+# Clean build directory.
+npm run clean
+or
+yarn run build
+```
+
+##### Deployment
+
+```sh
+# compile
+1. yarn run build
+
+# upload dist/ to your server
+2. scp -rp build/ user@dest:/path
+
+# install production dependencies only
+3. npm --production
+
+# Use any process manager to start your services
+4. pm2 start build/index.js
+```
+## Database Diagram
+<img src="https://github.com/a-bianchi/shipping-api/blob/master/docs/diagram.png" width= 100 />
+
 ## Configuration
 
 Copy the file `.env.template` into the file `.env` and change the parameters to the proper ones.
+
+In posgresql run the following query
+```sh
+create extension "uuid-ossp";
+```
 
 ## Database migrations
 

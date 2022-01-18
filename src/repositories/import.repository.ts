@@ -8,8 +8,9 @@ export class ImportRepository {
     return await Import.create({ transaction });
   }
 
-  public async updateImport(id: string, data: Partial<Import>, transaction?: Transaction): Promise<[number, Import[]]> {
-    return await Import.update(data, { where: { id }, transaction });
+  public async updateImport(id: string, data: Partial<Import>, transaction?: Transaction): Promise<Import[]> {
+    const [, imp] = await Import.update(data, { where: { id }, returning: true, transaction });
+    return imp;
   }
 
   public async findOneImport(id: string): Promise<Import> {
