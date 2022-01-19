@@ -39,11 +39,7 @@ export const Config = {
     combinedFile: process.env.LOGGER_FILE_COMBINED || './var/logs/combined.log',
   },
   security: {
-    tokenExpiry: parseParamInt(process.env.SECURITY_TOKEN_EXPIRY, 1800),
-    tokenExpiryRefresh: parseParamInt(process.env.SECURITY_TOKEN_EXPIRY, '60d'),
-    passwordResetTimeout: parseParamInt(process.env.SECURITY_PASSWORD_RESET_TIMEOUT, 720),
+    tokenExpiry: parseParamInt(process.env.SECURITY_TOKEN_EXPIRY, '60d'),
     secretKeyJwt: process.env.SECURITY_SECRET_KEY_JWT,
-    bcryptSaltRounds: 10,
-    aesCypherKey: process.env.AES_CYPHER_KEY,
   },
 };

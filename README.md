@@ -3,6 +3,10 @@ Objetivo: construir una API con Rails que sea capaz de importar y validar los da
 
 
 Documentation: https://skydropx-challenge.herokuapp.com/docs/
+
+Use bearer toke: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNjQyNTU4MjgxLCJleHAiOjE2NDc3NDIyODF9.-zR7xYadU-QsHAzHZ88NSOqxhQnArqz-PFkh8sMFK-o"
+
+Generate new authorization token: GET - /token-authorization
 ## Start
 
 Clone the repo:
@@ -67,7 +71,7 @@ yarn run build
 4. pm2 start build/index.js
 ```
 ## Database Diagram
-<img src="https://github.com/a-bianchi/shipping-api/blob/master/docs/diagram.png" width= 100 />
+<img src="https://github.com/a-bianchi/shipping-api/blob/master/docs/diagram.png" width= 300 />
 
 ## Configuration
 

@@ -6,17 +6,10 @@ import { OrderRepository } from './../src/repositories/order.repository';
 import { Status } from './../src/types';
 const { readFile } = fs.promises;
 
-const file = 'shipments_data.csv';
+const file = 'shipments_data_v2.csv';
 const importService = new ImportService();
 const orderRepository = new OrderRepository();
 const importRepository = new ImportRepository();
-
-const parseAndExtractData = async function (file: string): Promise<string> {
-  const path = join(__dirname, `__resources__/${file}`);
-  const csv = await readFile(path, 'utf8');
-
-  return csv;
-};
 
 describe('Test services', () => {
   describe(`Import create and delete`, () => {
@@ -75,6 +68,37 @@ describe('Test services', () => {
 
       const importRemove = await orderRepository.remove(orderId);
       expect(importRemove).toBe(1);
+    });
+  });
+
+  describe(`Create ImportError`, () => {
+    it(`should insert import error and delete`, async () => {
+      const importEntity = await importRepository.createImport();
+      expect(importEntity.id.toString().length).toBe(36);
+
+      const storeErrors = await importService.storeErrors(importEntity.id, 0, [
+        {
+          messages: ['Error 1'],
+          path: 'path1',
+          value: 'value',
+        },
+      ]);
+      expect(storeErrors.length).toBe(1);
+
+      const removeImportError = await importRepository.removeImportError(storeErrors[0].id);
+      expect(removeImportError).toBe(1);
+    });
+  });
+
+  describe(`Create import with file`, async () => {
+    it(`should insert import and save file`, async () => {
+      const path = join(__dirname, `__resources__/${file}`);
+      const csvBuffer = await readFile(path);
+
+      const createImportId = await importService.createImport(csvBuffer, 'text/csv');
+
+      const removeImport = await importRepository.remove(createImportId);
+      expect(removeImport).toBe(1);
     });
   });
 });

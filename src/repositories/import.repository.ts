@@ -28,4 +28,8 @@ export class ImportRepository {
   public async createImportErrors(importError: Partial<CreateImportError>[], transaction?: Transaction): Promise<ImportError[]> {
     return await ImportError.bulkCreate(importError, { transaction });
   }
+
+  public async removeImportError(id: number): Promise<number> {
+    return await ImportError.destroy({ where: { id } });
+  }
 }

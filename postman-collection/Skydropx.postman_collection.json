@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "bfbeb4e9-91e0-41d2-87d0-791c47e3c525",
+		"name": "Skydropx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Documentation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SKYDROPX_ENDPOINT}}/docs",
+					"host": [
+						"{{SKYDROPX_ENDPOINT}}"
+					],
+					"path": [
+						"docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Import",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{SKYDROPX_ENDPOINT}}/import/845f1e56-78cd-11ec-8880-b6d5a5bc09c1",
+					"host": [
+						"{{SKYDROPX_ENDPOINT}}"
+					],
+					"path": [
+						"import",
+						"845f1e56-78cd-11ec-8880-b6d5a5bc09c1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Import Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/alejobianchi/Desktop/shipments_data.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SKYDROPX_ENDPOINT}}/import",
+					"host": [
+						"{{SKYDROPX_ENDPOINT}}"
+					],
+					"path": [
+						"import"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{SKYDROPX_ENDPOINT}}/token-authorization",
+					"host": [
+						"{{SKYDROPX_ENDPOINT}}"
+					],
+					"path": [
+						"token-authorization"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SKYDROPX_ENDPOINT",
+			"value": "http://localhost:3001/api",
+			"type": "string"
+		},
+		{
+			"key": "SKYDROPX_ENDPOINT_TEST",
+			"value": "https://skydropx-challenge.herokuapp.com/api",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

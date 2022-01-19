@@ -3,10 +3,13 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { ImportResponse } from '../dtos/import.response.dto';
 import { ImportService } from '../services/import.service';
 import multer from 'multer';
+import { decodeAndValidateAccessToken } from '../middlewares/decodeJwt.middleware';
+import { HttpNotFound } from '../libraries/httpErrors';
 const upload = multer();
 @OpenAPI({
   security: [{ jwt: [] }],
 })
+@UseBefore(decodeAndValidateAccessToken)
 @JsonController('/import')
 export class ImportController {
   private importService = new ImportService();
@@ -19,6 +22,7 @@ export class ImportController {
   async getOne(@Param('id') id: string) {
     const importResponse = await this.importService.getOneImport(id);
     let errors;
+    if (!importResponse) throw new HttpNotFound('IMPORT_NOT_FOUND');
     if (importResponse.errors.length > 0)
       errors = importResponse.errors.map((error) => {
         return {

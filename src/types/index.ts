@@ -52,13 +52,21 @@ export type ConvertOrder = {
   order: CreateOrder;
 };
 
-export type messageDetails = {
+export type MessageDetails = {
   path: string;
   messages: string;
   value: string | number;
 };
 
-export type errorDetails = {
+export type ErrorDetails = {
   line: number;
-  error: messageDetails;
+  error: MessageDetails;
+};
+
+export type SignParamsWithJWT = {
+  userId: string;
+};
+
+export type DecodedAccessToken = {
+  userId: string;
 };

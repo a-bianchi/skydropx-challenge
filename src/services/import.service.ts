@@ -69,7 +69,7 @@ export class ImportService {
     try {
       const importEntity = await this.importRepository.createImport(transaction);
       await this.storeImportFile(file, importEntity.id);
-      this.processFile(importEntity.id, mimetype as MimeTypes);
+      await this.processFile(importEntity.id, mimetype as MimeTypes);
       await transaction.commit();
       return importEntity.id;
     } catch (error) {
