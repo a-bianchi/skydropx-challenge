@@ -15,7 +15,7 @@ const dialectOptions: DialectOptions = {
   },
 };
 
-if (!process.env.LOCAL) dialectOptions.ssl = { required: true, rejectUnauthorized: process.env.NODE_ENV === 'production' ? true : false };
+if (!process.env.LOCAL) dialectOptions.ssl = { required: true, rejectUnauthorized: false };
 
 export const sequelize = new Sequelize({
   database: Config.db.database,
