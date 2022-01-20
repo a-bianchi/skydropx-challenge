@@ -59,7 +59,7 @@ export type MessageDetails = {
 };
 
 export type ErrorDetails = {
-  line: number;
+  lineNumber: number;
   error: MessageDetails;
 };
 

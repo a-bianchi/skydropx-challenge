@@ -1,11 +1,11 @@
-import { Transform, TransformCallback } from 'stream';
+import { Writable, TransformCallback } from 'stream';
 import { plainToClass } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { ImportService } from '../import.service';
 import { ImportErrorMessagesDto } from '../../dtos/importError.dto';
 import { Order } from '../../dtos/order.dto';
 
-export class CSVTransformer extends Transform {
+export class CSVTransformer extends Writable {
   private readonly importService: ImportService = new ImportService();
   private lineNumber = 0;
   private hasError = false;
@@ -14,9 +14,8 @@ export class CSVTransformer extends Transform {
     super({ objectMode: true });
   }
 
-  _transform(chunk: string, encoding: BufferEncoding, callback: TransformCallback): void {
-    const jsonChunk = JSON.parse(chunk);
-    const orderDto = plainToClass(Order, jsonChunk);
+  _write(chunk: Order, encoding: BufferEncoding, callback: TransformCallback): void {
+    const orderDto = plainToClass(Order, chunk);
     orderDto.lineNumber = ++this.lineNumber;
 
     validate(orderDto)
@@ -35,17 +34,15 @@ export class CSVTransformer extends Transform {
       })
       .catch(async (error: Error) => {
         await this.importService.storeErrors(this.importId, orderDto.lineNumber, [new ImportErrorMessagesDto([error.message], '', '')]);
-      });
-
-    callback(null, '');
+      })
+      .finally(() => callback());
   }
 
-  async _final(callback: (error?: Error) => void): Promise<void> {
-    console.log('_final');
+  _final(callback: (error?: Error) => void): void {
     if (this.hasError) {
-      await this.importService.markImportFailed(this.importId);
+      this.importService.markImportFailed(this.importId).catch(console.error);
     } else {
-      await this.importService.markImportSuccess(this.importId);
+      this.importService.markImportSuccess(this.importId).catch(console.error);
     }
     callback();
   }

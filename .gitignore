@@ -23,3 +23,5 @@ coverage
 var
 
 *.log
+
+package-lock.json

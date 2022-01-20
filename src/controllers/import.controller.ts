@@ -4,7 +4,7 @@ import { ImportResponse } from '../dtos/import.response.dto';
 import { ImportService } from '../services/import.service';
 import multer from 'multer';
 import { decodeAndValidateAccessToken } from '../middlewares/decodeJwt.middleware';
-import { HttpNotFound } from '../libraries/httpErrors';
+import { ImportStatusResponse } from '../dtos/import-status-response.dto';
 const upload = multer();
 @OpenAPI({
   security: [{ jwt: [] }],
@@ -19,22 +19,9 @@ export class ImportController {
     summary: 'Return a single import',
   })
   @ResponseSchema(ImportResponse)
-  async getOne(@Param('id') id: string) {
+  async getOne(@Param('id') id: string): Promise<ImportStatusResponse> {
     const importResponse = await this.importService.getOneImport(id);
-    let errors;
-    if (!importResponse) throw new HttpNotFound('IMPORT_NOT_FOUND');
-    if (importResponse.errors.length > 0)
-      errors = importResponse.errors.map((error) => {
-        return {
-          lineNumber: error.line,
-          error: JSON.parse(error.error),
-        };
-      });
-    return {
-      importId: id,
-      status: importResponse.status,
-      errors,
-    };
+    return importResponse;
   }
 
   @Post('/')
@@ -58,7 +45,8 @@ export class ImportController {
     },
   })
   @UseBefore(upload.single('file'))
-  async createImportFile(@UploadedFile('file') file: Express.Multer.File) {
+  @ResponseSchema(ImportResponse)
+  async createImportFile(@UploadedFile('file') file: Express.Multer.File): Promise<ImportResponse> {
     const importId = await this.importService.createImport(file.buffer, file.mimetype);
     return { importId };
   }

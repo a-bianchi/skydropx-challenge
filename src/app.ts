@@ -9,6 +9,8 @@ import { ImportController } from './controllers/import.controller';
 import { AuthController } from './controllers/auth.controller';
 import { errorHandler } from './middlewares/errorHandler.middleware';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { defaultMetadataStorage } = require('class-transformer/cjs/storage');
 
 const routingControllersOptions = {
@@ -36,8 +38,8 @@ const openAPI: Partial<OpenAPIObject> = {
     },
   },
   info: {
-    description: 'Generated with `routing-controllers-openapi`',
-    title: 'A sample API',
+    description: '`SkydropX` Developer Challenge',
+    title: 'Shipping API',
     version: '1.0.0',
   },
 };

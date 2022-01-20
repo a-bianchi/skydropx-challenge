@@ -6,8 +6,8 @@ export class ImportResponse {
   importId: string;
 
   @IsString()
-  status: string;
+  status?: string;
 
   @IsObject()
-  errors: ErrorDetails[] = [];
+  errors?: ErrorDetails[] = [];
 }

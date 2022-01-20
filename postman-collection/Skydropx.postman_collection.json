@@ -95,24 +95,26 @@
 			"response": []
 		},
 		{
-			"name": "Generate token",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Auth",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"username\": \"test\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "{{SKYDROPX_ENDPOINT}}/token-authorization",
+					"raw": "{{SKYDROPX_ENDPOINT}}/auth",
 					"host": [
 						"{{SKYDROPX_ENDPOINT}}"
 					],
 					"path": [
-						"token-authorization"
+						"auth"
 					]
 				}
 			},
