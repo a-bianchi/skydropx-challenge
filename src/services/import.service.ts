@@ -11,7 +11,9 @@ import { ImportErrorMessagesDto } from '../dtos/importError.dto';
 import ImportError from '../models/importError.model';
 import { Order } from '../dtos/order.dto';
 import Import from '../models/import.model';
-import { ConvertOrder, Status } from '../types';
+import { ConvertOrder, CreateAddress, CreateParcel, ErrorDetails, Status } from '../types';
+import { HttpNotFound } from '../libraries/httpErrors';
+import { ImportStatusResponse } from '../dtos/import-status-response.dto';
 
 export class ImportService {
   private importRepository = new ImportRepository();
@@ -30,7 +32,7 @@ export class ImportService {
   }
 
   private convertOrder(orderDto: Order): ConvertOrder {
-    const addressFrom = {
+    const addressFrom: CreateAddress = {
       name: orderDto.address_from_name,
       email: orderDto.address_from_email,
       street: orderDto.address_from_street1,
@@ -40,7 +42,7 @@ export class ImportService {
       countryCode: orderDto.address_from_country_code,
     };
 
-    const addressTo = {
+    const addressTo: CreateAddress = {
       name: orderDto.address_to_name,
       email: orderDto.address_to_email,
       street: orderDto.address_to_street1,
@@ -50,7 +52,7 @@ export class ImportService {
       countryCode: orderDto.address_to_country_code,
     };
 
-    const parcel = {
+    const parcel: CreateParcel = {
       length: orderDto.parcel_length,
       width: orderDto.parcel_width,
       height: orderDto.parcel_height,
@@ -114,8 +116,28 @@ export class ImportService {
     }
   }
 
-  public async getOneImport(id: string): Promise<Import> {
-    return this.importRepository.findOneImport(id);
+  public async getOneImport(id: string): Promise<ImportStatusResponse> {
+    const importStatus = await this.importRepository.findOneImport(id);
+
+    const errors: ErrorDetails[] = [];
+
+    if (!importStatus) throw new HttpNotFound('IMPORT_NOT_FOUND');
+
+    if (importStatus.status === Status.ERROR) {
+      // don't return errors until status is not ERRORS
+      importStatus.errors.forEach((error) => {
+        errors.push({
+          lineNumber: error.line,
+          error: JSON.parse(error.error),
+        });
+      });
+    }
+
+    return {
+      importId: id,
+      status: importStatus.status,
+      errors,
+    };
   }
 
   public async markImportProcessed(id: string): Promise<Import[]> {

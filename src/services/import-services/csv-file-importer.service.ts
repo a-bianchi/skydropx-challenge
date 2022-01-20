@@ -12,15 +12,19 @@ export class CsvFileImporter implements FileImporter {
   importFile(fileName: string): void {
     this.importService
       .markImportProcessed(fileName)
-      .then()
+      .then(() => {
+        const csvParser = csv2json(undefined, { objectMode: true });
+        const csvReader = createReadStream(join(tmpdir(), fileName), { highWaterMark: 1 });
+        const csvTransformer = new CSVTransformer(fileName);
+
+        pipeline(csvReader, csvParser, csvTransformer, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        }).on('error', (error) => {
+          console.log(error);
+        });
+      })
       .catch((error) => console.error('Error mark import processed', error));
-    const csvToJson = csv2json();
-    pipeline(createReadStream(join(tmpdir(), fileName)), csvToJson, new CSVTransformer(fileName), (err) => {
-      if (err) {
-        console.error(err);
-      }
-    }).on('error', (error) => {
-      console.log(error);
-    });
   }
 }

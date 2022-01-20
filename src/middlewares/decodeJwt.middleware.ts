@@ -6,9 +6,9 @@ import { logger } from '../services/logger.service';
 import { Config } from '../config/config';
 import { HttpUnauthorized } from '../libraries/httpErrors';
 
-function extractTokenFromHeader(req: Request) {
+function extractTokenFromHeader(req: Request): DecodedAccessToken {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, Config.security.secretKeyJwt);
+  const decodedToken = jwt.verify(token, Config.security.secretKeyJwt) as DecodedAccessToken;
   return decodedToken;
 }
 

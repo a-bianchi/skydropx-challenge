@@ -1,13 +1,6 @@
-import { IsObject, IsString } from 'class-validator';
-import { ErrorDetails } from '../types';
+import { IsString } from 'class-validator';
 
 export class ImportResponse {
   @IsString()
   importId: string;
-
-  @IsString()
-  status: string;
-
-  @IsObject()
-  errors: ErrorDetails[] = [];
 }

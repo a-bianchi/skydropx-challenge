@@ -1,10 +1,13 @@
 import { buildMessage, isAlphanumeric, ValidateBy, ValidationOptions } from 'class-validator';
 
-export function isAlphanumericWithSpaces(value: any, locale: any): boolean {
+export function isAlphanumericWithSpaces(value: unknown, locale: string): boolean {
   if (!value) {
     return false;
   }
   const valueString = value.toString().replace(/\s/g, '');
+  //* : isAlphanumeric expects validator.AlphanumericLocale but such type is not available in class-validator
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return isAlphanumeric(valueString, locale);
 }
 

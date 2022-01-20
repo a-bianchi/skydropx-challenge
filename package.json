@@ -5,11 +5,13 @@
   "main": "index.local.js",
   "license": "MIT",
   "engines": {
-    "node": "16.13.2"
+    "node": ">=14.18"
   },
   "scripts": {
     "check:pre-commit": "npm run lint:fix",
     "check:pre-push": "npm run build && npm run test",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
     "start": "node build/index.local.js",
     "dev": "nodemon --config nodemon.json src/index.local.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.local.ts",
@@ -61,7 +63,13 @@
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.2.0",
     "ts-jest": "^26.5.5",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0"
   }
 }

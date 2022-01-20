@@ -1,19 +1,20 @@
-import { Get, JsonController } from 'routing-controllers';
+import { Body, JsonController, Post } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
+import { AuthBody } from '../dtos/auth.body';
 import { AuthResponse } from '../dtos/auth.response.dto';
 import { signParamsWithJWT } from '../utils';
 
 @OpenAPI({
-  security: [{ jwt: [] }],
+  security: [],
 })
-@JsonController('/token-authorization')
+@JsonController('/auth')
 export class AuthController {
-  @Get('')
+  @Post('')
   @OpenAPI({
     summary: 'Generate authorization token for test',
   })
   @ResponseSchema(AuthResponse)
-  async get() {
+  async auth(@Body() _body: AuthBody): Promise<AuthResponse> {
     const token = signParamsWithJWT({ userId: '1' });
     return {
       token,
