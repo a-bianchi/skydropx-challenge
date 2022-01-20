@@ -6,7 +6,11 @@ Documentation: https://skydropx-challenge.herokuapp.com/docs/
 
 Use bearer toke: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwiaWF0IjoxNjQyNTU4MjgxLCJleHAiOjE2NDc3NDIyODF9.-zR7xYadU-QsHAzHZ88NSOqxhQnArqz-PFkh8sMFK-o"
 
-Generate new authorization token: GET - /token-authorization
+Generate new authorization token: POST - /auth
+Body: {
+ username: "test",
+ password: "test"
+}
 ## Start
 
 Clone the repo:
@@ -77,7 +81,7 @@ yarn run build
 
 Copy the file `.env.template` into the file `.env` and change the parameters to the proper ones.
 
-In posgresql run the following query
+In posgresql before running migrations run the following query
 ```sh
 create extension "uuid-ossp";
 ```

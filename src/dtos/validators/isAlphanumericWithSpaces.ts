@@ -1,5 +1,6 @@
 import { buildMessage, isAlphanumeric, ValidateBy, ValidationOptions } from 'class-validator';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isAlphanumericWithSpaces(value: any, locale: any): boolean {
   if (!value) {
     return false;

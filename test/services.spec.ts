@@ -1,12 +1,9 @@
 import * as fs from 'fs';
-import { join } from 'path';
 import { ImportRepository } from '../src/repositories/import.repository';
 import { ImportService } from './../src/services/import.service';
 import { OrderRepository } from './../src/repositories/order.repository';
 import { Status } from './../src/types';
-const { readFile } = fs.promises;
 
-const file = 'shipments_data_v2.csv';
 const importService = new ImportService();
 const orderRepository = new OrderRepository();
 const importRepository = new ImportRepository();
@@ -87,18 +84,6 @@ describe('Test services', () => {
 
       const removeImportError = await importRepository.removeImportError(storeErrors[0].id);
       expect(removeImportError).toBe(1);
-    });
-  });
-
-  describe(`Create import with file`, async () => {
-    it(`should insert import and save file`, async () => {
-      const path = join(__dirname, `__resources__/${file}`);
-      const csvBuffer = await readFile(path);
-
-      const createImportId = await importService.createImport(csvBuffer, 'text/csv');
-
-      const removeImport = await importRepository.remove(createImportId);
-      expect(removeImport).toBe(1);
     });
   });
 });

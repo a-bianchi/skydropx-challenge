@@ -35,7 +35,6 @@ const config = {
     database: process.env.DB_NAME || 'skydropx',
     dialect: 'postgres',
     seederStorage: 'sequelize',
-    ssl: true,
     define: {
       underscored: 'true',
       timestamps: 'false',
