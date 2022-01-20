@@ -17,16 +17,33 @@ const dialectOptions: DialectOptions = {
 
 if (!process.env.LOCAL) dialectOptions.ssl = { required: true, rejectUnauthorized: false };
 
-export const sequelize = new Sequelize({
-  database: Config.db.database,
-  username: Config.db.username,
-  password: Config.db.password,
-  host: Config.db.host,
-  port: Config.db.port,
-  dialect: 'postgres',
-  dialectOptions,
-  models: [path.join(__dirname, '**/*.model.ts')],
-  modelMatch: (filename: string, member: string): boolean => {
-    return filename.substring(0, filename.indexOf('.model')) === member;
-  },
-});
+let sequelizeInstance;
+
+if (!process.env.DATABASE_URL) {
+  sequelizeInstance = new Sequelize({
+    database: Config.db.database,
+    username: Config.db.username,
+    password: Config.db.password,
+    host: Config.db.host,
+    port: Config.db.port,
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions,
+    models: [path.join(__dirname, '**/*.model.ts')],
+    modelMatch: (filename: string, member: string): boolean => {
+      return filename.substring(0, filename.indexOf('.model')) === member;
+    },
+  });
+} else {
+  sequelizeInstance = new Sequelize(`${process.env.DATABASE_URL}?sslmode=require`, {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions,
+    models: [path.join(__dirname, '**/*.model.ts')],
+    modelMatch: (filename: string, member: string): boolean => {
+      return filename.substring(0, filename.indexOf('.model')) === member;
+    },
+  });
+}
+
+export const sequelize = sequelizeInstance;

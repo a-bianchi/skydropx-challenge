@@ -7,6 +7,7 @@ import { routingControllersToSpec } from 'routing-controllers-openapi';
 import * as swaggerUiExpress from 'swagger-ui-express';
 import { ImportController } from './controllers/import.controller';
 import { AuthController } from './controllers/auth.controller';
+import { errorHandler } from './middlewares/errorHandler.middleware';
 
 const { defaultMetadataStorage } = require('class-transformer/cjs/storage');
 
@@ -41,6 +42,9 @@ const openAPI: Partial<OpenAPIObject> = {
   },
 };
 const spec = routingControllersToSpec(storage, routingControllersOptions, openAPI);
+
+// Error handler
+app.use(errorHandler);
 
 app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
 
